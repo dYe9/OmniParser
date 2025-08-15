@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Blockchain Visualization</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    font-family: sans-serif;
+    color: #fff;
+  }
+  .block {
+    width: 200px;
+    height: 120px;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    transform-style: preserve-3d;
+  }
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+  }
+  .info {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+<script>
+const blocks = [];
+const container = document.body;
+let prevHash = "0";
+
+function createBlock(index, prev) {
+  const element = document.createElement("div");
+  element.className = "block";
+  const hash = Math.random().toString(16).slice(2, 10);
+  element.innerHTML = `<h3>Block ${index}</h3><div class="info">prev: ${prev}<br/>hash: ${hash}</div>`;
+  container.appendChild(element);
+  blocks.push(element);
+  return hash;
+}
+
+function arrangeBlocks() {
+  blocks.forEach((block, i) => {
+    block.style.transform = `translate3d(${i * 220}px, ${(i % 2) * 150}px, ${-i * 120}px)`;
+  });
+}
+
+for (let i = 0; i < 5; i++) {
+  prevHash = createBlock(i, prevHash);
+}
+arrangeBlocks();
+</script>
+</body>
+</html>
